@@ -34,10 +34,10 @@ public class SpreadSheetLoader : EditorWindow
 
     private void AddEvent(VisualElement ui)
     {
-        //¹öÆ° ÀÔ·Â°ú ÅØ½ºÆ® ÇÊµå °¡Á®¿À°í
+        //ë²„íŠ¼ ì…ë ¥ê³¼ í…ìŠ¤íŠ¸ í•„ë“œ ê°€ì ¸ì˜¤ê³ 
         Button loadBtn = ui.Q<Button>("btn-load");
         TextField txtUrl = ui.Q<TextField>("txt-url");
-        txtUrl.SetValueWithoutNotify(_DocumentID); //ÃÊ±â°ªÀ¸·Î ±âº» ¹®¼­ ¾ÆÀÌµğ ¼ÂÆÃ
+        txtUrl.SetValueWithoutNotify(_DocumentID); //ì´ˆê¸°ê°’ìœ¼ë¡œ ê¸°ë³¸ ë¬¸ì„œ ì•„ì´ë”” ì…‹íŒ…
 
         loadBtn.RegisterCallback<ClickEvent>(evt =>
         {
@@ -59,7 +59,7 @@ public class SpreadSheetLoader : EditorWindow
 
         txtUrl.RegisterCallback<ChangeEvent<string>>(evt =>
         {
-            _DocumentID = evt.newValue; // º¯°æµÈ °ªÀ¸·Î ¹®¼­°ª °»½Å
+            _DocumentID = evt.newValue; // ë³€ê²½ëœ ê°’ìœ¼ë¡œ ë¬¸ì„œê°’ ê°±ì‹ 
         });  
     }
 
@@ -72,18 +72,18 @@ public class SpreadSheetLoader : EditorWindow
 
         if(www.result == UnityWebRequest.Result.ConnectionError || www.responseCode != 200)
         {
-            statusLbl.text += $"{sheetID} : ºÒ·¯¿À±â Áß ¿À·ù ¹ß»ı";
+            statusLbl.text += $"{sheetID} : ë¶ˆëŸ¬ì˜¤ê¸° ì¤‘ ì˜¤ë¥˜ ë°œìƒ";
             rootVisualElement.Q("popup").AddToClassList("off");
             yield break;
         }
 
         string fileText = www.downloadHandler.text;
-        statusLbl.text = $"{sheetID} : ·Îµù ¿Ï·á. ÅØ½ºÆ® µ¥ÀÌÅÍ ÆÄ½Ì ½ÃÀÛ";
-        yield return null; //ÅØ½ºÆ®°¡ ui¿¡ ±×·ÁÁú ½Ã°£ È®º¸
+        statusLbl.text = $"{sheetID} : ë¡œë”© ì™„ë£Œ. í…ìŠ¤íŠ¸ ë°ì´í„° íŒŒì‹± ì‹œì‘";
+        yield return null; //í…ìŠ¤íŠ¸ê°€ uiì— ê·¸ë ¤ì§ˆ ì‹œê°„ í™•ë³´
 
         string[] lines = fileText.Split("\n");
 
-        //Ã¹¹øÂ° ÁÙÀº Çì´õ´Ï±î »©°í ÀĞ¾î
+        //ì²«ë²ˆì§¸ ì¤„ì€ í—¤ë”ë‹ˆê¹Œ ë¹¼ê³  ì½ì–´
         int lineNum = 1;
         try
         {
@@ -95,8 +95,8 @@ public class SpreadSheetLoader : EditorWindow
         }
         catch (Exception e)
         {
-            statusLbl.text += $"\n {sheetID} : ÅØ½ºÆ® ÆÄ½ÌÁß ¿À·ù ¹ß»ı : ¿Ã¹Ù¸£Áö ¾ÊÀº °ª";
-            statusLbl.text += $"\n {sheetID} : {lineNum} ¶óÀÎ¿¡¼­ ¿À·ù";
+            statusLbl.text += $"\n {sheetID} : í…ìŠ¤íŠ¸ íŒŒì‹±ì¤‘ ì˜¤ë¥˜ ë°œìƒ : ì˜¬ë°”ë¥´ì§€ ì•Šì€ ê°’";
+            statusLbl.text += $"\n {sheetID} : {lineNum} ë¼ì¸ì—ì„œ ì˜¤ë¥˜";
             statusLbl.text += $"\n{e.Message}";
             
             yield break;
@@ -105,7 +105,10 @@ public class SpreadSheetLoader : EditorWindow
             rootVisualElement.Q("popup").AddToClassList("off");
         }
 
-        statusLbl.text += $"\n {sheetID} ·ÎºÎÅÍ {lineNum-1} °³ÀÇ ÆÄÀÏÀÌ ¼º°øÀûÀ¸·Î ÀÛ¼º¿Ï·á";
+        statusLbl.text += $"\n {sheetID} ë¡œë¶€í„° {lineNum-1} ê°œì˜ íŒŒì¼ì´ ì„±ê³µì ìœ¼ë¡œ ì‘ì„±ì™„ë£Œ";
+        
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
     private void CreateSourceCode(string name, string className, string type)
@@ -123,15 +126,14 @@ public class SpreadSheetLoader : EditorWindow
         if(asset == null)
         {
             asset = ScriptableObject.CreateInstance<CharDataSO>();
+            asset.maxHP = hp;
+            asset.dex = dex;
+            asset.critical = critical;
             string filename = UnityEditor.AssetDatabase.GenerateUniqueAssetPath($"Assets/SO/{name}.asset");
+            //Createì „ì— ê°’ì„ ë„£ì–´ì•¼ í•´ 2023.07.18
             AssetDatabase.CreateAsset(asset, filename);
         }
 
-        asset.maxHP = hp;
-        asset.dex = dex;
-        asset.critical = critical;
-
-        AssetDatabase.SaveAssets();
     }
 }
 

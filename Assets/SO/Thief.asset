@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17143337af445d34994ac1f133abfe26, type: 3}
-  m_Name: Magician
+  m_Name: Thief
   m_EditorClassIdentifier: 
-  maxHP: 80
-  dex: 30
-  critical: 0.5
+  maxHP: 70
+  dex: 90
+  critical: 0.7

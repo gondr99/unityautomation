@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17143337af445d34994ac1f133abfe26, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  maxHP: 0
-  dex: 0
-  critical: 0
+  maxHP: 150
+  dex: 30
+  critical: 0.2
