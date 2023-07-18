@@ -131,6 +131,7 @@ public class SpreadSheetLoader : EditorWindow
             asset.critical = critical;
             string filename = UnityEditor.AssetDatabase.GenerateUniqueAssetPath($"Assets/SO/{name}.asset");
             //Create전에 값을 넣어야 해 2023.07.18
+            AssetDatabase.DeleteAsset(filename);
             AssetDatabase.CreateAsset(asset, filename);
         }
 
