@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17143337af445d34994ac1f133abfe26, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
-  maxHP: 80
-  dex: 60
+  maxHP: 150
+  dex: 80
   critical: 0.8

@@ -134,6 +134,13 @@ public class SpreadSheetLoader : EditorWindow
             AssetDatabase.DeleteAsset(filename);
             AssetDatabase.CreateAsset(asset, filename);
         }
+        else
+        {
+            asset.maxHP = hp;
+            asset.dex = dex;
+            asset.critical = critical;
+            EditorUtility.SetDirty(asset);
+        }
 
     }
 }
